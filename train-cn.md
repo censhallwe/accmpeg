@@ -19,11 +19,11 @@ conda env create -f conda_env.yml
 conda activate regenhance
 ```
 
-在配置好环境后，请通过**`pip`**方式安装`pytorch`和`torchvision`（可以参考该链接：[Pytorch]([Start Locally | PyTorch](https://pytorch.org/get-started/locally/))，我们使用的pytorch=1.10.1，CUDA环境为11.1），还需安装`detectron2`（可参考[detectron2]([detectron2/INSTALL.md at main · facebookresearch/detectron2 (github.com)](https://github.com/facebookresearch/detectron2/blob/main/INSTALL.md))，注意匹配正确的pytorch和CUDA版本）。
+在配置好环境后，请通过**`pip`**方式安装`pytorch`和`torchvision`（可以参考该链接：[Pytorch](https://pytorch.org/get-started/locally/)，我们使用的pytorch=1.10.1，CUDA环境为11.1），还需安装`detectron2`（可参考[detectron2](https://github.com/facebookresearch/detectron2/blob/main/INSTALL.md)，注意匹配正确的pytorch和CUDA版本）。
 
-上述过程会自动安装一个旧版本的`ffmpeg`，需要用新版本进行替换，请从[FFmpeg]([John Van Sickle - FFmpeg Static Builds](https://johnvansickle.com/ffmpeg/))中下载一个static版本的ffmpeg并用其对原本的ffmpeg进行替换（你可以通过`which ffmpeg`命令找到原先的ffmpeg，我们所使用的ffmpeg版本为5.0.1）。
+上述过程会自动安装一个旧版本的`ffmpeg`，需要用新版本进行替换，请从[FFmpeg](https://johnvansickle.com/ffmpeg/)中下载一个static版本的ffmpeg并用其对原本的ffmpeg进行替换（你可以通过`which ffmpeg`命令找到原先的ffmpeg，我们所使用的ffmpeg版本为5.0.1）。
 
-由于后续准备数据时需要进行超分，你可以选用合适的超分模型，我们选用了`EDSR`模型作为超分模型，具体环境配置可参考[EDSR]([sanghyun-son/EDSR-PyTorch: PyTorch version of the paper 'Enhanced Deep Residual Networks for Single Image Super-Resolution' (CVPRW 2017) (github.com)](https://github.com/sanghyun-son/EDSR-PyTorch))官方github。
+由于后续准备数据时需要进行超分，你可以选用合适的超分模型，我们选用了`EDSR`模型作为超分模型，具体环境配置可参考[EDSR](https://github.com/sanghyun-son/EDSR-PyTorch)官方github。
 
 ## 2. 准备数据
 
@@ -31,7 +31,7 @@ conda activate regenhance
 
 运行`extract.py`从`input.mp4`视频中提取出png格式的图片，这些图片将作为360p低分辨率下的视频原始输入。
 
-在训练过程中，为了计算区域重要性，我们需要模糊的输入和清晰的输入。模糊的输入通过将上述png图片插值放大得到（例如插值到1080p来放大3倍），这个过程可以提前完成保存到特定目录中，也可以嵌入到训练过程中，因为插值计算较为简单且快速。清晰的输入通过超分完成，你需要提前准备一个训练好的超分模型，我们使用的是[EDSR]([sanghyun-son/EDSR-PyTorch: PyTorch version of the paper 'Enhanced Deep Residual Networks for Single Image Super-Resolution' (CVPRW 2017) (github.com)](https://github.com/sanghyun-son/EDSR-PyTorch))超分模型，其他模型也可以，根据你希望提升的分辨率倍数配置不同的模型即可。由于整帧超分计算量较大，我们建议在训练宏块级区域重要性预测器过程前提前完成对低分辨图片的超分，保存在特定的目录下。
+在训练过程中，为了计算区域重要性，我们需要模糊的输入和清晰的输入。模糊的输入通过将上述png图片插值放大得到（例如插值到1080p来放大3倍），这个过程可以提前完成保存到特定目录中，也可以嵌入到训练过程中，因为插值计算较为简单且快速。清晰的输入通过超分完成，你需要提前准备一个训练好的超分模型，我们使用的是[EDSR](https://github.com/sanghyun-son/EDSR-PyTorch)超分模型，其他模型也可以，根据你希望提升的分辨率倍数配置不同的模型即可。由于整帧超分计算量较大，我们建议在训练宏块级区域重要性预测器过程前提前完成对低分辨图片的超分，保存在特定的目录下。
 
 ## 3. 模型训练
 
@@ -39,11 +39,11 @@ conda activate regenhance
 
 ## 4. 训练过程的推广
 
-我们在文中使用了6种不同量级的模型进行了测试，上述1-3步是轻量级模型[AccMPEG](https://github.com/KuntaiDu/AccMPEG/)的AccModel的训练，为了进一步压缩模型推理时间，提升模型推理效率，我们将上述过程推广到了[PaddleSeg]([PaddlePaddle/PaddleSeg: Easy-to-use image segmentation library with awesome pre-trained model zoo, supporting wide-range of practical tasks in Semantic Segmentation, Interactive Segmentation, Panoptic Segmentation, Image Matting, 3D Segmentation, etc. (github.com)](https://github.com/PaddlePaddle/PaddleSeg))，尝试了多种量级的模型。`PaddleSeg`是基于`飞桨PaddlePaddle`完成的端到端图像分割套件，包含模型训练、评估、预测、导出、部署等完整图像分割流程，且包含大量可用模型，适合新手快速实现在自己数据集上的分割任务。
+我们在文中使用了6种不同量级的模型进行了测试，上述1-3步是轻量级模型[AccMPEG](https://github.com/KuntaiDu/AccMPEG/)的AccModel的训练，为了进一步压缩模型推理时间，提升模型推理效率，我们将上述过程推广到了[PaddleSeg](https://github.com/PaddlePaddle/PaddleSeg)，尝试了多种量级的模型。`PaddleSeg`是基于`飞桨PaddlePaddle`完成的端到端图像分割套件，包含模型训练、评估、预测、导出、部署等完整图像分割流程，且包含大量可用模型，适合新手快速实现在自己数据集上的分割任务。
 
 这个推广的出发点在于任务的相似性。我们训练的宏块级区域重要性预测器目的是找出视频中检测精度受超分影响较为敏感的区域，基于敏感程度对不同区域设定了不同的重要性，这在某种程度上类似于对图像进行分割，根据重要性程度的不同分割成不同的类别。因此，我们可以通过PaddleSeg将上述训练过程推广到分割任务中。
 
-具体环境配置以及训练、预测、导出ONNX模型等过程可直接参考[PaddleSeg]([PaddlePaddle/PaddleSeg: Easy-to-use image segmentation library with awesome pre-trained model zoo, supporting wide-range of practical tasks in Semantic Segmentation, Interactive Segmentation, Panoptic Segmentation, Image Matting, 3D Segmentation, etc. (github.com)](https://github.com/PaddlePaddle/PaddleSeg))官方文档，我们便不再赘述，你可以选用自己感兴趣的模型完成上述流程。我们主要介绍数据集准备的过程。
+具体环境配置以及训练、预测、导出ONNX模型等过程可直接参考[PaddleSeg](https://github.com/PaddlePaddle/PaddleSeg)官方文档，我们便不再赘述，你可以选用自己感兴趣的模型完成上述流程。我们主要介绍数据集准备的过程。
 
 在第4步中，你会得到`input.mp4`对应的区域重要性掩码`importance`，其对应相应视频帧的区域重要性分布，值域为[0, 1]。我们通过`importance`来获得图像分割的标注，我们将[0,1]的区间10等分，分别映射到0-9共十个分割类别中（即[0, 0.1)对应类别0，[0.1, 0.2)对应类别1，依次类推），之后通过OpenCV等方式将其转换成图片导出，这样我们就能获得输入图像相应的标注图像。由于PaddeSeg的原图和标注图像需要分辨率相同，所以需要将宏块级的区域重要性掩码`importance`上采样至和原图相同的分辨率，上采样选择“最邻近”方式即可。
 
@@ -71,16 +71,16 @@ images/image2.jpg  labels/image2.png
 ...
 ```
 
-更多细节可以参考[PaddleSeg自定义数据集准备]([PaddleSeg/docs/data/marker/marker_cn.md at release/2.9.1 · PaddlePaddle/PaddleSeg (github.com)](https://github.com/PaddlePaddle/PaddleSeg/blob/release/2.9.1/docs/data/marker/marker_cn.md))。
+更多细节可以参考[PaddleSeg自定义数据集准备](https://github.com/PaddlePaddle/PaddleSeg/blob/release/2.9.1/docs/data/marker/marker_cn.md)。
 
 ## 5.模型部署
 
 在训练完上述模型后，可以将模型导出成ONNX模型，并部署在服务器上。
 
-我们将模型部署至Nvidia GPU中以获得更快的计算速度，采用的方式是TensorRT计算方式，需要准备相应的环境，大家可以在[TensorRT官网]([TensorRT SDK | NVIDIA Developer](https://developer.nvidia.com/tensorrt))下载安装和自己CUDA与cudnn适配的TensorRT版本。
+我们将模型部署至Nvidia GPU中以获得更快的计算速度，采用的方式是TensorRT计算方式，需要准备相应的环境，大家可以在[TensorRT官网](https://developer.nvidia.com/tensorrt)下载安装和自己CUDA与cudnn适配的TensorRT版本。
 
 之后可通过$DIR目录下的`trt_infer.py`完成模型部署。
 
 ## 致谢
 
-感谢以下工作的帮助：[AccMPEG](https://github.com/KuntaiDu/AccMPEG/)，[EDSR]([sanghyun-son/EDSR-PyTorch: PyTorch version of the paper 'Enhanced Deep Residual Networks for Single Image Super-Resolution' (CVPRW 2017) (github.com)](https://github.com/sanghyun-son/EDSR-PyTorch))，[PaddleSeg]([PaddlePaddle/PaddleSeg: Easy-to-use image segmentation library with awesome pre-trained model zoo, supporting wide-range of practical tasks in Semantic Segmentation, Interactive Segmentation, Panoptic Segmentation, Image Matting, 3D Segmentation, etc. (github.com)](https://github.com/PaddlePaddle/PaddleSeg))，[TensorRT]([NVIDIA/TensorRT: NVIDIA® TensorRT™ is an SDK for high-performance deep learning inference on NVIDIA GPUs. This repository contains the open source components of TensorRT. (github.com)](https://github.com/NVIDIA/TensorRT))
+感谢以下工作的帮助：[AccMPEG](https://github.com/KuntaiDu/AccMPEG/)，[EDSR](https://github.com/sanghyun-son/EDSR-PyTorch)，[PaddleSeg](https://github.com/PaddlePaddle/PaddleSeg)，[TensorRT](https://github.com/NVIDIA/TensorRT)
