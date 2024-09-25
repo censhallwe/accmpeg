@@ -2,7 +2,7 @@
 
 # 宏块级区域重要性预测器训练
 
-这个README文件将带你一步步实现训练一个自己数据集上的宏块级区域重要性预测器，如果在过程中遇到任何问题，欢迎在**[Issues](https://github.com/mi150/RegenHance/issues)**中留言提问❤
+这个README文件将带你一步步实现训练一个自己数据集上的宏块级区域重要性预测器，如果在过程中遇到任何问题，欢迎在 **[Issues](https://github.com/mi150/RegenHance/issues)** 中留言提问❤
 
 ## 1. 准备环境
 
@@ -19,7 +19,7 @@ conda env create -f conda_env.yml
 conda activate regenhance
 ```
 
-在配置好环境后，请通过**`pip`**方式安装`pytorch`和`torchvision`（可以参考该链接：[Pytorch](https://pytorch.org/get-started/locally/)，我们使用的pytorch=1.10.1，CUDA环境为11.1），还需安装`detectron2`（可参考[detectron2](https://github.com/facebookresearch/detectron2/blob/main/INSTALL.md)，注意匹配正确的pytorch和CUDA版本）。
+在配置好环境后，请通过 **`pip`** 方式安装`pytorch`和`torchvision`（可以参考该链接：[Pytorch](https://pytorch.org/get-started/locally/)，我们使用的pytorch=1.10.1，CUDA环境为11.1），还需安装`detectron2`（可参考[detectron2](https://github.com/facebookresearch/detectron2/blob/main/INSTALL.md)，注意匹配正确的pytorch和CUDA版本）。
 
 上述过程会自动安装一个旧版本的`ffmpeg`，需要用新版本进行替换，请从[FFmpeg](https://johnvansickle.com/ffmpeg/)中下载一个static版本的ffmpeg并用其对原本的ffmpeg进行替换（你可以通过`which ffmpeg`命令找到原先的ffmpeg，我们所使用的ffmpeg版本为5.0.1）。
 
