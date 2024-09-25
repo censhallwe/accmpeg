@@ -2,7 +2,7 @@
 
 # 宏块级区域重要性预测器训练
 
-这个README文件将带你一步步实现训练一个自己数据集上的宏块级区域重要性预测器，如果在过程中遇到任何问题，欢迎在**[Issues]([Issues · mi150/RegenHance (github.com)](https://github.com/mi150/RegenHance/issues))**中留言提问❤
+这个README文件将带你一步步实现训练一个自己数据集上的宏块级区域重要性预测器，如果在过程中遇到任何问题，欢迎在**[Issues](https://github.com/mi150/RegenHance/issues)**中留言提问❤
 
 ## 1. 准备环境
 
